@@ -1,0 +1,7 @@
+#ifndef CONFIGH
+#define CONFIGH
+
+#define @WAIT_EVENT_ENGINE@
+
+#endif
+

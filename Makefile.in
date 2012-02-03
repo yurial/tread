@@ -1,0 +1,32 @@
+.PHONY: all clean distclean install uninstall
+
+CC=@CC@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+
+CFLAGS+=-D__INFO__="\"`sh info.sh -n`\"" @CFLAGS@
+SRC:=tread.c wait_event.c
+OBJ:=$(SRC:%.c=%.o)
+
+all: tread
+tread: ${OBJ}
+	${CC} ${CFLAGS} ${LDFLAGS} ${OBJ} -o $@
+
+install: tread
+	cp tread ${bindir}/
+
+uninstall:
+	[ -f "${bindir}/tread" ] && rm "${bindir}/tread" || exit 0
+
+clean:
+	[ -f tread ] && rm tread || exit 0
+	find . -type f -name '*.o' -delete
+
+distclean: clean
+	[ -f config.h ] && rm config.h || exit 0
+	[ -f config.log ] && rm config.log || exit 0
+	[ -f config.status ] && rm config.status || exit 0
+	[ -d autom4te.cache/ ] && rm -r autom4te.cache || exit 0
+	[ -f Makefile ] && rm Makefile || exit 0 # ;)
+
