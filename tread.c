@@ -29,7 +29,7 @@ while ( 1 )
         switch ( errno )
             {
             case EINTR:
-                continue; //normal
+                continue; /* normal */
             case EFAULT:
             case EINVAL:
             case ENOMEM:
@@ -37,7 +37,7 @@ while ( 1 )
             }
         }
     if ( 0 == nready )
-        break; //timed out
+        break; /* timed out */
     if ( fds->revents & POLLIN )
         {
         nread = read( g_fd, buff, sizeof(buff) );
