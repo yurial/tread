@@ -6,6 +6,8 @@
 #include <getopt.h>
 #include <time.h>
 
+char* strptime(const char* buf, const char* format, struct tm* timeptr);
+
 #define BUFFSIZE (4*1024)
 
 static const char optstring[] = "hvut:T:";
@@ -52,7 +54,7 @@ while ( 1 )
             break;
         case 'T':
             {
-            const char* ret = (const char*)strptime( optarg, "%Y-%m-%d %H:%M:%S", &tm );
+            char* ret = strptime( optarg, "%Y-%m-%d %H:%M:%S", &tm );
             if ( NULL == ret || '\0' != *ret )
                 {
                 fprintf( stderr, "invalid date time\n" );
