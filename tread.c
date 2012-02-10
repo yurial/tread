@@ -40,7 +40,7 @@ while ( 1 )
         break; /* timed out */
     if ( fds->revents & POLLIN )
         {
-        nread = read( g_fd, buff, sizeof(buff) );
+        nread = read( g_fd, buff, g_buffsize );
         if ( 0 == nread )
             {
             if ( NULL == g_filename )
