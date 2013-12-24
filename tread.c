@@ -14,14 +14,35 @@ int main(int argc, char* argv[])
 int nready;
 int nread;
 int nwrite;
+int second_try = 0;
 params( argc, argv );
 char* buff = (char*)malloc( g_buffsize );
 struct pollfd fds[1];
 
+for(;;)
+    {
+    g_fd = open( g_filename, O_RDONLY );
+    if ( g_fd > 0 )
+        break; /* file opened successfully */
+
+    if( g_time > time( NULL ) )
+        {
+        sleep( 1 );
+        continue;
+        }
+
+    if( second_try || 0 == g_timeout )
+        return EXIT_FAILURE;
+
+    /* wait and try again */
+    usleep( g_timeout*1000 );
+    second_try = 1;
+    }
+
 fds->fd = g_fd;
 fds->events = POLLIN | POLLERR | POLLHUP;
 fds->revents = 0;
-while ( 1 )
+for(;;)
     {
     nready = poll( fds, 1, gettimeout() );
     if ( 0 > nready )

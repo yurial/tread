@@ -75,12 +75,6 @@ while ( 1 )
 if ( optind < argc )
     {
     g_filename = argv[optind];
-    g_fd = open( g_filename, O_RDONLY );
-    if ( 0 > g_fd )
-        {
-        fprintf( stderr, "can't open input file '%s'\n", g_filename );
-        exit( EXIT_FAILURE );
-        }
     }
 if ( 0 != tm.tm_year )
     {
